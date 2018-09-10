@@ -1,11 +1,18 @@
-/* ADDFX2SFaJIbdnBY */
-
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
 
 const Post = require('./models/post')
 
 const app = express();
+
+mongoose.connect('mongodb+srv://webpreneur:ADDFX2SFaJIbdnBY@cluster0-nfycd.mongodb.net/node-angular?retryWrites=true')
+.then(() => {
+  console.log('Connected to database!');
+})
+.catch(() => {
+  console.log('Connection failed!');
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -13,7 +20,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
-    'Access-Control-Allow-Headers', 
+    'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
   );
   res.setHeader(
@@ -25,31 +32,23 @@ app.use((req, res, next) => {
 
 app.post('/api/posts', (req, res, next) => {
   const post = new Post({
-    title: req.body.title
+    title: req.body.title,
+    content: req.body.content,
   });
-  console.log(post);
+  post.save();
   res.status(201).json({
     message: 'Post added succesfully'
   });
 });
 
 app.get('/api/posts', (req, res, next) => {
-  const posts = [
-    {
-      id: 'fads8484h54654f5456dfn',
-      title: 'First server side post',
-      content: 'This my content'
-    },
-    {
-      id: 'fadsfsdaf48454f5456dfn',
-      title: 'Second server side post',
-      content: 'This my content'
-    },
-  ];
-  res.status(200).json({
-    message: 'Posts fetched successfully!',
-    posts: posts
-  });
+  Post.find()
+    .then(documents => {
+      res.status(200).json({
+        message: 'Posts fetched successfully!',
+        posts: documents
+      });
+    })
 });
 
 module.exports = app;
