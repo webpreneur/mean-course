@@ -1,11 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Subscription } from 'rxjs';
 
 /* INTERFACES */
 import { Post } from '../post.model';
-
 /* SERVICES */
 import { PostService } from "../posts.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-post-list',
@@ -25,6 +24,10 @@ export class PostListComponent implements OnInit{
       .subscribe( (posts: Post[]) => {
         this.posts = posts;
       });
+  }
+
+  onDelete(postId: string){
+    this.postsService.deletePost(postId);
   }
 
   ngOnDestroy(){
