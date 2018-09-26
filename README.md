@@ -2,9 +2,21 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
 
-## VSC Plugins
+## Backend
 
-* Install Angular Essentials
+### Run node server
+
+$ node server.js
+
+## Database
+
+### Login to MongoDB Cloud
+
+[MongoDB Cloud Login](https://cloud.mongodb.com/user#/atlas/login)
+
+### Whitelist IP
+
+... 'CONNECT'
 
 ## Development server
 
